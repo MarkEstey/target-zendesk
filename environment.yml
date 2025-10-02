@@ -1,0 +1,11 @@
+name: target-zendesk
+channels:
+  - conda-forge
+dependencies:
+  - python==3.12.*
+  - poetry
+  - git
+  - pip
+  - pip:
+    - meltano
+    - singer-sdk==0.49.*

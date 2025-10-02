@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "target-zendesk"
+version = "0.1.0"
+description = "`target-zendesk` is a Singer target for Zendesk, built with the Meltano Singer SDK."
+readme = "README.md"
+authors = ["Mark Estey"]
+keywords = [
+    "ELT",
+    "Zendesk",
+]
+license = "Apache-2.0"
+packages = [
+    { include = "target_zendesk" },
+]
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.9"
+singer-sdk = "~=0.49"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+# CLI declaration
+target-zendesk = 'target_zendesk.target:TargetZendesk.cli'
