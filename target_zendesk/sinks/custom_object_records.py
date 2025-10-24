@@ -44,3 +44,21 @@ class CustomObjectRecordSink(ZendeskSink):
 
             else:
                 raise ValueError('custom_object_record update action requires custom_object_record_id, external_id, or name in record')
+
+        if record['action'] == 'delete':
+            if 'custom_object_record_id' in record and record['custom_object_record_id'] is not None:
+                self._requests_session.delete(
+                    f"{self.config['url_base']}/api/v2/custom_objects/{record['custom_object_key']}/records/{record['custom_object_record_id']}",
+                )
+
+            elif 'external_id' in record and record['external_id'] is not None:
+                self._requests_session.delete(
+                    f"{self.config['url_base']}/api/v2/custom_objects/{record['custom_object_key']}/records",
+                    params={'external_id': record['external_id']},
+                )
+
+            elif 'name' in record and record['name'] is not None:
+                self._requests_session.delete(
+                    f"{self.config['url_base']}/api/v2/custom_objects/{record['custom_object_key']}/records",
+                    params={'name': record['name']},
+                )
