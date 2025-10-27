@@ -35,7 +35,7 @@ class TargetZendesk(Target):
             StringType,
             required=True,
             default='upsert',
-            description='Default action for writing records, must be one of: insert, upsert, delete'
+            description='Default action for writing records, must be one of: upsert, delete'
         ),
         Property(
             'validate_records',

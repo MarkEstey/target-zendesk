@@ -1,9 +1,9 @@
 import base64
 import requests
 
-from singer_sdk.sinks import RecordSink
+from singer_sdk.sinks import BatchSink
 
-class ZendeskSink(RecordSink):
+class ZendeskSink(BatchSink):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
