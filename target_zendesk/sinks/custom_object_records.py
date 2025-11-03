@@ -46,12 +46,12 @@ class CustomObjectRecordSink(ZendeskSink):
             self._batch_records[object][action].append(value)
 
         def format_record(record):
-            body = {'custom_object_record': {'custom_object_fields': record['custom_object_fields']}}
-            if 'id' in record:
+            body = {'custom_object_fields': record['custom_object_fields']}
+            if record.get('id') is not None:
                 body['id'] = record['id']
-            if 'external_id' in record:
+            if record.get('external_id') is not None:
                 body['external_id'] = record['external_id']
-            if 'name' in record:
+            if record.get('name') is not None:
                 body['name'] = record['name']
             return body
 
