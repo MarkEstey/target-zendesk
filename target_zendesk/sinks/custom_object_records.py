@@ -93,19 +93,16 @@ class CustomObjectRecordSink(ZendeskSink):
                 self.logger.debug(f"processing batch for object: {object}, action: {action}, size: {len(self._batch_records[object][action])}")
                 assert len(self._batch_records[object][action]) <= 100, f"batch for object: {object}, action: {action} has more than 100 items"
 
-                self.logger.info(f"debug: {dict({'job': {'action': action, 'items': self._batch_records[object][action]}})}")
                 result = self._requests_session.post(
                     f"{self.config['url_base']}/api/v2/custom_objects/{object}/jobs",
                     json={'job': {'action': action, 'items': self._batch_records[object][action]}}
                 )
-                self.logger.info(f"debug: job result {result.json()}")
                 job_status = result.json()['job_status']
 
                 while job_status['status'] in ('queued', 'working'):
                     time.sleep(1)
                     result = self._requests_session.get(f"{self.config['url_base']}/api/v2/job_statuses/{job_status['id']}")
                     job_status = result.json()['job_status']
-                    self.logger.info(f"debug: job result {result.json()}")
 
                 self.logger.debug(f"finished batch for object: {object}, action: {action}, id: {job_status['id']}, status: {job_status['status']}")
                 if job_status['status'] != 'completed':
